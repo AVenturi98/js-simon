@@ -24,6 +24,8 @@ const countDown = document.getElementById('countdown');
 const instructionForGame = document.getElementById('instructions');
 const formForInputClient = document.getElementById('answers-form');
 const listNumberGuess = document.getElementById('numbers-list');
+const formNumberClient = document.getElementById('answers-form');
+const messageResultGame = document.getElementById('message');
 
 // set dei numeri min e max e timer pre partita
 const guessNumber = 5;
@@ -45,32 +47,10 @@ const countDownFunction = setInterval(function () {
         instructionForGame.classList.add('d-none');
         instructionForGame.innerText = 'Inserisci i numeri che hai visto';
         formForInputClient.classList.remove('d-none')
+        listNumberGuess.classList.add('d-none')
     }
 
 }, 1000)
-
-// rendo visibili i numeri random durante il timer attivo
-
-function elementNumberGuessForAppendToPage(a, b) {
-
-    const newElemntShadow = document.createDocumentFragment();
-
-    for (let i = 0; i < b.length; i++) {
-
-        const numberRandomPC = b[i];
-
-        const newElementOnPage = document.createElement('div');
-
-        newElementOnPage.innerHTML = numberRandomPC;
-
-        newElemntShadow.appendChild(newElementOnPage);
-
-    }
-    
-    a.appendChild(newElemntShadow)
-}
-elementNumberGuessForAppendToPage(listNumberGuess, setToContainerNumber)
-
 
 
 
@@ -108,12 +88,31 @@ const setToContainerNumber = numberOnArray(guessNumber, minValue, maxValue);
 //genero 5 numeri random  ---------------------------------------------------------^
 
 
-// ritardo la comparsa dei miei numeri
+// rendo visibili i numeri random durante il timer attivo
+function elementNumberOnPage(a) {
+
+    for (let i = 0; i < a.length; i++) {
+
+        const numberRandomPC = a[i];
+        
+        const newElementOnPage = document.createElement('li');
+    
+        newElementOnPage.innerHTML = numberRandomPC;
+    
+        const elementToAppend = instructionForGame.appendChild(newElementOnPage);
+    
+        listNumberGuess.appendChild(elementToAppend)
+    }
+}
+const numberPrint = elementNumberOnPage(setToContainerNumber);
+
+
+// ritardo la comparsa dei miei numeri in console
 function breakP() {
     console.log(setToContainerNumber);
 }
 
-// setTimeout(breakP, 1000);
+setTimeout(breakP, 1000);
 // -----------------
 
 
