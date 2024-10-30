@@ -17,42 +17,89 @@ Consigli del giorno:
 
 */
 
-
 console.log('Simone says');
 
-const guessNumber = 5; 
+// prendo le mie variabili dalla pagina html
+const countDown = document.getElementById('countdown');
+const instructionForGame = document.getElementById('instructions');
+const formForInputClient = document.getElementById('answers-form');
+const listNumberGuess = document.getElementById('numbers-list');
+
+// set dei numeri min e max e timer pre partita
+const guessNumber = 5;
 const maxValue = 20;
 const minValue = 1;
+let timerForPlay = 3;
+
+
+// inserisco il countdown in pagina
+countDown.innerText = timerForPlay
+
+const countDownFunction = setInterval(function () {
+
+    timerForPlay = timerForPlay - 1;
+    countDown.innerHTML = timerForPlay;
+
+    if (timerForPlay === 0) {
+        clearInterval(countDownFunction);
+        instructionForGame.classList.add('d-none');
+        instructionForGame.innerText = 'Inserisci i numeri che hai visto';
+        formForInputClient.classList.remove('d-none')
+    }
+
+}, 1000)
+
+// rendo visibili i numeri random durante il timer attivo
+
+function elementNumberGuessForAppendToPage(a, b) {
+
+    const newElemntShadow = document.createDocumentFragment();
+
+    for (let i = 0; i < b.length; i++) {
+
+        const numberRandomPC = b[i];
+
+        const newElementOnPage = document.createElement('div');
+
+        newElementOnPage.innerHTML = numberRandomPC;
+
+        newElemntShadow.appendChild(newElementOnPage);
+
+    }
+    
+    a.appendChild(newElemntShadow)
+}
+elementNumberGuessForAppendToPage(listNumberGuess, setToContainerNumber)
+
+
 
 
 //genero 5 numeri random  ---------------------------------------------------------|
 function getRandomIntInclusive(min, max) {
-    
+
     const minCeiled = Math.ceil(min);
-    
+
     const maxFloored = Math.floor(max);
-    
+
     const number = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // The maximum is inclusive and the minimum is inclusive
-    
+
     return number
 }
 const randomizeNumber = getRandomIntInclusive(minValue, maxValue);
 
 
-
-
 function numberOnArray(length, minValue, maxValue) {
-    
+
     const containerRandomNumber = []
-    
+
     while (containerRandomNumber.length < length) {
 
         const numberRandomPC = getRandomIntInclusive(minValue, maxValue);
-    
+
         if (!containerRandomNumber.includes(numberRandomPC)) {
             containerRandomNumber.push(numberRandomPC)
-        }   
-        
+        }
+
     }
 
     return containerRandomNumber
@@ -63,32 +110,32 @@ const setToContainerNumber = numberOnArray(guessNumber, minValue, maxValue);
 
 // ritardo la comparsa dei miei numeri
 function breakP() {
-    console.log(setToContainerNumber);    
+    console.log(setToContainerNumber);
 }
 
-setTimeout(breakP, 1000)
+// setTimeout(breakP, 1000);
 // -----------------
 
 
 // verifico che i numeri inseriti dell'utente eguaglino quelli del PC
-function inputUS(){
+function inputUS() {
 
     for (let i = 0; i < setToContainerNumber.length; i++) {
-        
+
         const containerNumber = setToContainerNumber[i]
-        
-        const immetti = prompt('numberss');
-        
+
+        const immetti = '5'//prompt('numberss');
+
         let verify = ''
 
-        if (immetti.includes(containerNumber)){
+        if (immetti.includes(containerNumber)) {
             verify = 'ok'
         } else verify = 'not'
         console.log(verify)
     }
 }
 
-setTimeout(inputUS, 3000)
+setTimeout(inputUS, 3000);
 
 
 
